@@ -10,20 +10,25 @@ function fetchImages() {
     .then(results => {
         results.message.forEach(image => renderImages(image))
     })
-    
-    // see the content inside the json object
-    // .then(json => console.log(json))
 }
 
 function renderImages(url) {
-    let div = document.querySelector('div#dog-image-container')
-    let list = document.createElement('ol')
-    let listItem = document.createElement('li')
+    let dogContainer = document.querySelector('div#dog-image-container')
     let image = document.createElement('img')
 
     image.src = url
 
-    div.appendChild(list)
-    list.appendChild(listItem)
-    listItem.appendChild(image)
+    dogContainer.appendChild(image)
 }
+
+// garbage code
+
+// let dogs = document.querySelector('div#dog-image-container')
+// let orderedList = document.createElement('ol')
+// dog.appendChild(orderedList)
+
+// function renderImages(url) {
+//     let listItem = document.createElement('li')
+//     listItem.innerHTML = `<img src="${url}">`
+//     orderedList.appendChild(listItem)
+// }
