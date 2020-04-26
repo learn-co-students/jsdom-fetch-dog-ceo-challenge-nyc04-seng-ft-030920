@@ -27,8 +27,9 @@ fetch(dogBreedsUrl)
     .then((breeds) => {
         breeds = Object.keys(breeds.message)
         breeds.forEach(breed => loadBreeds(breed))
-        chooseDogBreed()
-        dogBreedByLetter(breeds)
+
+        updateDogBreeds(breeds)
+        breedSelectListener()
     })
 
 function loadBreeds(breed) {
@@ -42,41 +43,32 @@ function loadBreeds(breed) {
 }
 
 function changeColor(event) {
-    // console.log(event.target)
     event.target.style.color = 'yellow'
 }
 
 // challenge 4: filter out dog breeds by their first letter with the dropdown menu
-// how can i only show the dogs that start with the letter that's selected in the dropdown? 
-// remove the children of the unorderedList?
-// then add the filtered breed names back to the list?
 
-function chooseDogBreed() {
-    dropdown.addEventListener("change", (event) => {
-        if (event.target.value === 'a') {
-            console.log(dogA)
-        } else {
-
-        }
-    })
+function updateDogBreeds (breeds) {
+    removeChildren(unorderedList);
+    breeds.forEach(breed => loadBreeds(breed));
+  }
+  
+function removeChildren(element) {
+    let child = element.lastElementChild;
+    while (child) {
+        element.removeChild(child);
+        child = element.lastElementChild;
+    }
 }
 
-function dogBreedByLetter(breeds) {
-    dogA = []
-    dogB = []
-    dogC = []
-    dogD = []
+function breedSelectListener() {
+    dropdown.addEventListener('change', function (event) {
+      selectBreed(event.target.value);
+    });
+}
 
-    breeds.forEach(breed => {
-        if (breed[0] === 'a') {
-            dogA.push(breed)
-        } else if (breed[0] === 'b') {
-            dogB.push(breed)
-        } else if (breed[0] === 'c') {
-            dogC.push(breed)
-        } else if (breed[0] === 'd') {
-            dogD.push(breed)
-        }
-    })
-    // console.log(dogA, dogB, dogC, dogD)
+function selectBreed(letter) {
+    updateDogBreeds(breeds.filter(breed =>
+        breed.startsWith(letter))
+    );
 }
