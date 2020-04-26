@@ -4,8 +4,7 @@ const dogImagesUrl = "https://dog.ceo/api/breeds/image/random/4"
 const dogBreedsUrl = 'https://dog.ceo/api/breeds/list/all'
 const dropdown = document.getElementById('breed-dropdown')
 const dogContainer = document.getElementById('dog-image-container')
-let unorderedList = document.createElement('ul')
-dogContainer.appendChild(unorderedList)
+const unorderedList = document.getElementById('dog-breeds')
 
 fetch(dogImagesUrl)
     .then(r => r.json())
@@ -43,7 +42,7 @@ function loadBreeds(breed) {
 }
 
 function changeColor(event) {
-    console.log(event.target)
+    // console.log(event.target)
     event.target.style.color = 'yellow'
 }
 
