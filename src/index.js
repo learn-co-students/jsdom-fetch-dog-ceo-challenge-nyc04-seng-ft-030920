@@ -2,7 +2,10 @@
 
 const dogImagesUrl = "https://dog.ceo/api/breeds/image/random/4"
 const dogBreedsUrl = 'https://dog.ceo/api/breeds/list/all'
-const dogContainer = document.querySelector('div#dog-image-container')
+const dropdown = document.getElementById('breed-dropdown')
+const dogContainer = document.getElementById('dog-image-container')
+let unorderedList = document.createElement('ul')
+dogContainer.appendChild(unorderedList)
 
 fetch(dogImagesUrl)
     .then(r => r.json())
@@ -24,16 +27,57 @@ fetch(dogBreedsUrl)
     .then(r => r.json())
     .then((breeds) => {
         breeds = Object.keys(breeds.message)
-        loadBreeds(breeds)
+        breeds.forEach(breed => loadBreeds(breed))
+        chooseDogBreed()
+        dogBreedByLetter(breeds)
     })
 
-function loadBreeds(breeds) {
-    let unorderedList = document.createElement('ul')
-    dogContainer.appendChild(unorderedList)
+function loadBreeds(breed) {
+    let listItem = document.createElement('li')
+    listItem.innerText = breed
+    listItem.style.cursor = 'pointer'
+    unorderedList.appendChild(listItem)
 
-    breeds.forEach((breedName) => {
-        let listItem = document.createElement('li')
-        listItem.innerText = breedName
-        unorderedList.appendChild(listItem)
+    // challenge 3: change the text color every time a dog breed gets clicked on
+    listItem.addEventListener("click", changeColor)
+}
+
+function changeColor(event) {
+    console.log(event.target)
+    event.target.style.color = 'yellow'
+}
+
+// challenge 4: filter out dog breeds by their first letter with the dropdown menu
+// how can i only show the dogs that start with the letter that's selected in the dropdown? 
+// remove the children of the unorderedList?
+// then add the filtered breed names back to the list?
+
+function chooseDogBreed() {
+    dropdown.addEventListener("change", (event) => {
+        if (event.target.value === 'a') {
+            console.log(dogA)
+        } else {
+
+        }
     })
+}
+
+function dogBreedByLetter(breeds) {
+    dogA = []
+    dogB = []
+    dogC = []
+    dogD = []
+
+    breeds.forEach(breed => {
+        if (breed[0] === 'a') {
+            dogA.push(breed)
+        } else if (breed[0] === 'b') {
+            dogB.push(breed)
+        } else if (breed[0] === 'c') {
+            dogC.push(breed)
+        } else if (breed[0] === 'd') {
+            dogD.push(breed)
+        }
+    })
+    // console.log(dogA, dogB, dogC, dogD)
 }
