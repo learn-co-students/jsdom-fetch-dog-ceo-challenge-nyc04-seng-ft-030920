@@ -2,6 +2,7 @@ const imgUrl = "https://dog.ceo/api/breeds/image/random/4"
 const breedUrl = 'https://dog.ceo/api/breeds/list/all'
 const dogImageContainer = document.getElementById("dog-image-container")
 const breedsList = document.getElementById("dog-breeds")
+const dropdown = document.getElementById("breed-dropdown")
 
 fetch(imgUrl)
 .then(r => r.json())
@@ -25,6 +26,7 @@ fetch(breedUrl)
 .then(r => r.json())
 .then((breeds) => {
   forEachBreed(breeds)
+  breedSelector(breeds)
 })
 
 function forEachBreed(breeds) {
@@ -40,5 +42,30 @@ function renderBreeds(breed) {
 
   listItem.addEventListener("click", (event) => {
     event.target.style.color = "green"
+  })
+}
+
+function breedSelector(breeds) {
+  let allBreeds = Object.keys(breeds.message)
+  let arr = []
+  
+  dropdown.addEventListener("change", (event) => {
+    arr = []
+    allBreeds.filter((breed) => {
+      if (breed.startsWith(event.target.value)) {
+        arr.push(breed)
+      }
+    })
+    
+    let child = breedsList.lastElementChild
+
+    while (child) {
+        breedsList.removeChild(child)
+        child = breedsList.lastElementChild
+    }
+
+    arr.forEach((breed) => {
+      renderBreeds(breed)
+    })
   })
 }
