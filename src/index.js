@@ -37,4 +37,8 @@ function renderBreeds(breed) {
   let listItem = document.createElement("li")
   listItem.innerText = breed
   breedsList.append(listItem)
+
+  listItem.addEventListener("click", (event) => {
+    event.target.style.color = "green"
+  })
 }
